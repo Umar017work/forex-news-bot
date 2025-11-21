@@ -8,29 +8,36 @@ import pytz
 
 # ========= CONFIGURE THESE =========
 
-# Token comes from Render env var (DISCORD_TOKEN)
+# Your Discord bot token comes from an environment variable (DISCORD_TOKEN)
+# On Render, you'll set DISCORD_TOKEN in the dashboard.
 TOKEN = os.getenv("DISCORD_TOKEN")
 
-# Keep your channel ID hardcoded for now
+# Channel where the bot will send alerts
 CHANNEL_ID = 1441268899369713684  # <-- your alert channel ID (int)
 
+# Role ping:
+# If you want to ping everyone, use:
+# ROLE_PING = "@everyone"
+#
+# If you want to ping a specific role (e.g. @Traders):
+# - Turn on Developer Mode in Discord
+# - Right-click the role -> Copy Role ID
+# - Put it like: "<@&ROLE_ID_HERE>"
+ROLE_PING = "@1441268539158822935"  # <-- or "<@&YOUR_ROLE_ID_HERE>"
+
+# Forex Factory ICS URL
 FOREX_ICS = "https://nfs.faireconomy.media/ff_calendar_thisweek.ics"
+
+# Your timezone
 DISPLAY_TZ = pytz.timezone("Asia/Kolkata")
 
-# Role ping: put @everyone or your role ID
-# Example for @everyone:
-# ROLE_PING = "@everyone"
-# Example for a specific role:
-# ROLE_PING = "<@&123456789012345678>"
-ROLE_PING = "<@1441268539158822935>"  # <-- change this to your real role ID or "@everyone"
-
-# Cache settings
-CACHE_TTL_MINUTES = 15  # how often to refresh ICS (15 min)
+# How often to refresh ICS data
+CACHE_TTL_MINUTES = 15
 
 # ===================================
 
 intents = discord.Intents.default()
-intents.message_content = True   # for !nextnews
+intents.message_content = True   # needed for !nextnews
 client = discord.Client(intents=intents)
 
 # Globals for caching
